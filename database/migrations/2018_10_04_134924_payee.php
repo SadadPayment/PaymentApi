@@ -19,6 +19,8 @@ class Payee extends Migration
 
             $table->string('payee_id');
             $table->string('name');
+
+            $table->timestamps();
         });
     }
 
