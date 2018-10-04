@@ -12,11 +12,11 @@ class TopUpSeeder extends Seeder
     public function run()
     {
         //
-        $zain=App\Model\TopUpBiller::where("name","Zain")->first();
-        $sudani=App\Model\TopUpBiller::where("name","Sudani")->first();
-        $mtn=App\Model\TopUpBiller::where("name","MTN")->first();
-        $top_up = App\Model\TopUpType::where("name","TopUp")->first();
-        $bill_payment = App\Model\TopUpType::where("name","BillPayment")->first();
+        $zain=App\Model\Payment\TopUp\TopUpBiller::where("name","Zain")->first();
+        $sudani=App\Model\Payment\TopUp\TopUpBiller::where("name","Sudani")->first();
+        $mtn=App\Model\Payment\TopUp\TopUpBiller::where("name","MTN")->first();
+        $top_up = App\Model\Payment\TopUp\TopUpType::where("name","TopUp")->first();
+        $bill_payment = App\Model\Payment\TopUp\TopUpType::where("name","BillPayment")->first();
 
 
 
