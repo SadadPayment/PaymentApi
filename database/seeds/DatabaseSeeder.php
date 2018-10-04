@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MerchantTypeSeeder::class);
         $this->call(MerchantsSeeder::class);
         $this->call(services::class);
-        //$this->call(AccountTypeSeeder::class);
-        $this->call(TopUpTypeSeeder::class);//TopUpBillerSeeder
+        $this->call(AccountTypeSeeder::class);
+        //$this->call(TopUpTypeSeeder::class);//TopUpBillerSeeder
         $this->call(TopUpBillerSeeder::class);//TopUpBillerSeeder
         $this->call(TopUpSeeder::class);//TopUpBillerSeeder
         $this->call(TransfersTypeSeeder::class);//TopUpBillerSeeder
