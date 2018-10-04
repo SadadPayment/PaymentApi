@@ -156,7 +156,7 @@ class TopUp extends Controller
         return TopUp::where('type_id', $type_id)->where('biller_id', $biller_id)->first();
     }
     public static function getPayeeId($biller){
-        $payee = Payee::where("name",$biller)->first();
+        $payee = payee::where("name",$biller)->first();
         return $payee->payee_id;
     }
 

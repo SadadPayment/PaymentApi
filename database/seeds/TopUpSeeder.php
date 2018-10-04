@@ -20,7 +20,7 @@ class TopUpSeeder extends Seeder
 
 
 
-        $zain_top_up = new App\Model\Payment\Payee();
+        $zain_top_up = new App\Model\Payment\payee();
         $zain_top_up->payee_id = "0010010001";
         $zain_top_up->name = "Zain";
         $zain_top_up->save();
