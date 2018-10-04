@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Functions;
+use App\Model\Payment\payee;
 use App\Model\Payment\Payment;
 use App\Model\Payment\TopUp\TopUpBiller;
 use App\Model\Response\PaymentResponse;
@@ -155,12 +156,8 @@ class TopUp extends Controller
         return TopUp::where('type_id', $type_id)->where('biller_id', $biller_id)->first();
     }
     public static function getPayeeId($biller){
-        if ($biller == 'Zain')
-            return "0010010001";
-        elseif ($biller == 'Mtn')
-            return "0010010003";
-        else
-            return "0010010005";
+        $payee = Payee::where("name",$biller)->first();
+        return $payee->payee_id;
     }
 
     public static function saveTopUp($paymentResponse, $topUp ,  $response)
