@@ -12,13 +12,13 @@ class TopUpBillerSeeder extends Seeder
     public function run()
     {
         //
-        $zain = new App\Model\TopUpBiller();
+        $zain = new App\Model\Payment\TopUp\TopUpBiller();
         $zain->name = "Zain";
         $zain->save();
-        $sudani = new App\Model\TopUpBiller();
+        $sudani = new App\Model\Payment\TopUp\TopUpBiller();
         $sudani->name = "Sudani";
         $sudani->save();
-        $mtn = new App\Model\TopUpBiller();
+        $mtn = new App\Model\Payment\TopUp\TopUpBiller();
         $mtn->name = "MTN";
         $mtn->save();
 
