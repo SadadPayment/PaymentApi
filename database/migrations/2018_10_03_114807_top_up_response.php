@@ -13,7 +13,7 @@ class TopUpResponse extends Migration
      */
     public function up()
     {
-        Schema::create('electricity_responses', function (Blueprint $table) {
+        Schema::create('top_up_responses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('top_up_id')->unsigned();
             $table->foreign('top_up_id')->references('id')->on('top_ups');
