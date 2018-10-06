@@ -19,10 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post("register" , "API\AuthController@registration")->middleware('cors');
-Route::post("activate" , "API\ApiController@activate");
-Route::post("login" , "API\ApiController@authenticate");
-Route::post("requestreset" , "API\ApiController@resetPassword");
-Route::post("resetpassword" , "API\ApiController@resetPasswordWithCode");
+Route::post("activate" , "API\AuthController@activate");
+Route::post("login" , "API\AuthController@authenticate");
+Route::post("requestreset" , "API\AuthController@resetPassword");
+Route::post("resetpassword" , "API\AuthController@resetPasswordWithCode");
 //Route::post('payment' , 'ApiController@payment')->middleware('jwt.auth');
 //Route::post('payment_account' , 'ApiController@payment_account')->middleware('jwt.auth');
 Route::post('topUp' , 'API\TopUp@topUp')->middleware('jwt.auth');
