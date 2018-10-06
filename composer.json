@@ -14,7 +14,7 @@
         "laravel/tinker": "^1.0",
         "meng-tian/async-soap-guzzle": "^0.2.4",
         "phpseclib/phpseclib": "~2.0.11",
-        "tymon/jwt-auth": "0.5.*",
+        "tymon/jwt-auth": "^1.0.0-rc.2",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {

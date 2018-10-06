@@ -161,7 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //ide Helper
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class
 
     ],
 
