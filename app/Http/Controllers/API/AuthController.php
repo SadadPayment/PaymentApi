@@ -1,74 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Functions;
-use App\Model\CardTransfer;
-use App\Model\Electricity;
-use App\Model\PublicKey;
-use App\Model\Transfer;
-use App\Model\TransferType;
-use phpseclib\Crypt\RSA;
-use Illuminate\Support\Facades\Auth;
-use App\Model\BalanceInquiry;
-use App\Model\BalanceInquiryResponse;
-use App\Model\E15;
-use App\Model\PayTopUp;
-use App\Model\TopUp;
-use App\Model\TopUpBiller;
-use App\Model\TopUpType;
-use Illuminate\Support\Facades\Hash;
-use App\Model\E15Response;
-use App\Model\E15Service;
-use App\Model\GovermentPaymentResponse;
-use App\Model\Account\AccountType;
 use App\Model\Account\BankAccount;
-use App\Model\Account\MobileAccount;
-use App\Model\Merchant\Merchant;
-use App\Model\Merchant\MerchantServices;
-use App\Model\OurE15;
-use App\Model\Payment;
-use App\Model\PaymentResponse;
-use App\Model\ResetPassword;
-use App\Model\Response;
-use App\Model\Transaction;
-use App\Model\TransactionType;
 use App\Model\User;
-use App\Model\UserValidation;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
-use GuzzleHttp;
 use Illuminate\Http\Request;
-use ExternalServer\EBS;
-use ExternalServer\E15 as E15Server;
-use Meng\AsyncSoap\Guzzle\Factory;
-use Namshi\JOSE\JWT;
-use PHPUnit\Util\Json;
-use Webpatser\Uuid\Uuid;
+use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Validator;
 
-class ApiController extends Controller
+class AuthController extends Controller
 {
-    const Server = "https://172.16.199.1:8877/QAConsumer/";
-
-    const PublicKey = "getPublicKey";
-    const Payment = "payment";
-    const Goverment = "requestGovernmentService";
-    const Bill = "getBill";//https://172.16.199.1:8877/QAConsumer/getBill
-    const Balance = "getBalance";
-    const CardTransfer = "doCardTransfer";
-    const AccountTranser = "doAccountTransfer";
-    const server = "http://196.29.166.229:8888/E15/GetInvoice.asmx?WSDL";
-    const Registertion = "register";
-    const GenerateIPIN= "doGenerateIPinRequest";
-    const ComplateIPIN = "doGenerateCompletionIPinRequest";
-    //
 
 
-    /*      This will be login        */
     public function authenticate(Request $request)
     {
+
+
+        $request->validate([
+           'phone' => 'requierd',
+            'IPIN' => 'required',
+        ]);
+
 
         $phone = $request->json()->get("phone");
         $ipin = $request->json()->get("IPIN");
@@ -125,6 +79,18 @@ class ApiController extends Controller
     public function registration(Request $request)
     {
         if ($request->isJson()) {
+            $request->validate([
+                'phone' => 'requierd|unique:users|number',
+                'fullName' => 'requierd|string',
+
+                'username' => 'required|unique:users|string',
+                'password' => 'required|string',
+                'PAN' => 'required|number|unique:bank_accounts',
+                'IPIN' => 'required|number',
+                'expDate' => 'required|date',
+            ]);
+
+
             $user = $request->json();
             $fullName = $user->get("fullName");
             $userName = $user->get("userName");
@@ -330,153 +296,5 @@ class ApiController extends Controller
             return response()->json($response, 200);
         }
     }
-
-
-    public function payment(Request $request)
-    {
-
-
-        //return response()->json(compact( 'token','user'));
-        if ($request->isJson()) {
-            $token = JWTAuth::parseToken();
-            $user = $token->authenticate();
-            //$user = JWTAuth::toUser($token);
-            /******   Create Transaction Object  *********/
-            $transaction = new Transaction();
-            $transaction->user()->associate($user);
-            $service = $request->json()->get("service");
-            $service_id = $this->getServiceId($service);
-            if ($service_id == null) {
-                $res = array();
-                $res += ["error" => true];
-                $res += ["message" => "Service Name Not Found"];
-                return response()->json($res, 200);
-            }
-            $type = TransactionType::where('name', "payment")->pluck('id')->first();
-            $transaction->transactionType()->associate($type);
-            $convert = $this->getDateTime();
-
-
-            $uuid = Uuid::generate()->string;
-            //$uuid=Uuid::randomBytes(16);
-
-            $transaction->uuid = $uuid;
-            $transaction->transDateTime = $convert;
-            $transaction->status = "created";
-            $transaction->save();
-
-
-            /*****   Create Payment Object     ******/
-            $payment = new Payment();
-            $payment->transaction()->associate($transaction);
-
-            $payment->service()->associate($service_id);
-            $payment->accountType()->associate(2);
-            $payment->save();
-
-            $service = MerchantServices::where("id", $payment->service->id)->first();
-            if ($service->type->name == "goverment") {
-                $response = self::sendGovermentServiceRequest($transaction->id);
-                $basicResonse = Response::saveBasicResponse($transaction, $response);
-                $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment, $response);
-                GovermentPaymentResponse::saveGovermentResponse($paymentResponse, $response);
-                $transaction->status = "done";
-                $transaction->save();
-                return response()->json($response, '200');
-
-            } else if ($service->type->name == "private") {
-                $response = self::sendPaymentRequest($transaction->id);
-                $basicResonse = Response::saveBasicResponse($transaction, $response);
-                $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment, $response);
-                $transaction->status = "done";
-                $transaction->save();
-
-                $response += ["status" => "done"];
-                $response += ["transaction_id" => $transaction->uuid];
-                return response()->json($response, '200');
-            }
-            $res = array();
-            $res += ["status" => "done"];
-            $res += ["transaction_id" => $transaction->uuid];
-            return response()->json($res, '200');
-
-        } else
-            return response("Not Json", 415);
-    }
-
-
-
-
-
-
-    public function checkAccount($paymentType, $account)
-    {
-        if ($paymentType == "mobile") {
-            if (isset($account["mobile"]) && isset($account["ipin"])) {
-                return null;
-            } else {
-                return response()->json(
-                    [
-                        "error" => "There are some error",
-                        "status" => "mobile account missing"
-                    ]
-                    , '200');
-            }
-        } else {
-            if (isset($account["pan"]) && isset($account["ipin"]) && isset($account["expDate"]) && isset($account["mbr"])) {
-                return null;
-            } else {
-                return response()->json(
-                    [
-                        "error" => "There are some error",
-                        "status" => "bank account missing"
-                    ]
-                    , '200');
-            }
-        }
-    }
-
-
-    public function getServiceId($name)
-    {
-        return MerchantServices::where('name', $name)->first();
-    }
-
-    public function isUserAuthoraized($user, $transaction)
-    {
-        return Transaction::where("id", $transaction->id)->where("user_id", $user->id)->first();
-    }
-
-    public function isUsernameFound($username)
-    {
-        $user = User::where("username", $username)->get();
-        return $user->isEmpty() ? false : true;
-    }
-
-    public static function isPhoneAlreadyRegistered($phone)
-    {
-        $user = User::where("phone", $phone)->get();
-        return $user->isEmpty() ? false : true;
-    }
-
-    public static function sendSMS($phone, $code)
-    {
-        $service_url = 'http://sms.iprosolution-sd.com/app/gateway/gateway.php'; //'http://api.unifonic.com/rest/Messages/Send';
-        $curl = curl_init($service_url);
-        $curl_post_data = array(
-            "sendmessage" => 1,
-            "username" => 'Sadad',
-            "password" => 'Sadad@123',
-            "text" => ' رمز التحقق هو  ' . $code,
-            "numbers" => $phone,
-            "sender" => 'Properties',
-        );
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
-        $curl_response = curl_exec($curl);
-        curl_close($curl);
-    }
-
 
 }

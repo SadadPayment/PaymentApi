@@ -19,17 +19,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 //Route::group('/api/pay')
-Route::post("register" , "ApiController@registration")->middleware('cors');
-Route::post("activate" , "ApiController@activate");
-Route::post("login" , "ApiController@authenticate");
-Route::post("requestreset" , "ApiController@resetPassword");
-Route::post("resetpassword" , "ApiController@resetPasswordWithCode");
+Route::post("register" , "API\ApiController@registration")->middleware('cors');
+Route::post("activate" , "API\ApiController@activate");
+Route::post("login" , "API\ApiController@authenticate");
+Route::post("requestreset" , "API\ApiController@resetPassword");
+Route::post("resetpassword" , "API\ApiController@resetPasswordWithCode");
 //Route::post('payment' , 'ApiController@payment')->middleware('jwt.auth');
 //Route::post('payment_account' , 'ApiController@payment_account')->middleware('jwt.auth');
-Route::post('topUp' , 'TopUp@topUp')->middleware('jwt.auth');
-Route::post('balance_inquiry' , 'BalanceInquiry@balance_inquiry')->middleware('jwt.auth');
-Route::post('cardTransfer' , 'CardTransfer@card_transfer')->middleware('jwt.auth');
-Route::post('electricity' , 'Electricity@electricity')->middleware('jwt.auth');
-Route::post('e15','E15@e15')->middleware('jwt.auth');
+Route::post('topUp' , 'API\TopUp@topUp')->middleware('jwt.auth');
+Route::post('balance_inquiry' , 'API\BalanceInquiry@balance_inquiry')->middleware('jwt.auth');
+Route::post('cardTransfer' , 'API\CardTransfer@card_transfer')->middleware('jwt.auth');
+Route::post('electricity' , 'API\Electricity@electricity')->middleware('jwt.auth');
+Route::post('e15','API\E15@e15')->middleware('jwt.auth');
 
 

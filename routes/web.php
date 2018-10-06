@@ -20,12 +20,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'Web\HomeController@index')->name('home');
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
 
 
-Route::resource('merchants' , 'MerchantController');
+Route::resource('merchants' , 'Web\MerchantController');
 
-Route::get('/test' , 'MerchantController@test');
+Route::get('/test' , 'Web\MerchantController@test');
