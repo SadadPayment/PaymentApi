@@ -3,25 +3,38 @@
 namespace App\Http\Controllers\API;
 
 use App\Model\Account\BankAccount;
+use App\Model\ResetPassword;
 use App\Model\User;
+use App\Model\UserValidation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Validator;
+use App\Functions;
 
 class AuthController extends Controller
 {
 
 
+
+
     public function authenticate(Request $request)
     {
 
+        $validator = Validator::make($request->all(),[
+                'phone' => 'requierd',
+                'IPIN' => 'required',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
 
-        $request->validate([
-           'phone' => 'requierd',
-            'IPIN' => 'required',
-        ]);
 
 
         $phone = $request->json()->get("phone");
@@ -48,9 +61,7 @@ class AuthController extends Controller
                 $response += ["message" => "User Credential Invalid"];
                 return response()->json($response, 200);
             }
-            //return response()->json(["account"=>$account],200);
             else{
-                //$user = Auth::user();
                 if ($user->status == "1") {
                     $token = JWTAuth::fromUser($user);
 
@@ -86,17 +97,6 @@ class AuthController extends Controller
 
             //return response()->json($request,200);
 
-
-            $user = $request->json();
-            $fullName = $user->get("fullName");
-            $userName = $user->get("userName");
-            $phone = $user->get("phone");
-            $password = $user->get("password");
-            $PAN = $user->get("PAN");
-            $IPIN = $user->get("IPIN");
-            $expDate = $user->get("expDate");
-            $mbr = "0";
-
             $validator = Validator::make($request->all(),[
                 'phone' => 'required|unique:users|numeric',
                 'fullName' => 'required|string',
@@ -115,63 +115,19 @@ class AuthController extends Controller
                 ]);
             }
 
-            if (!isset($userName)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert userName "];
-                return response()->json($response, 200);
-            }
 
-            if (!isset($fullName)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert fullName "];
-                return response()->json($response, 200);
+            $user = $request->json();
+            $fullName = $user->get("fullName");
+            $userName = $user->get("userName");
+            $phone = $user->get("phone");
+            $password = $user->get("password");
+            $PAN = $user->get("PAN");
+            $IPIN = $user->get("IPIN");
+            $expDate = $user->get("expDate");
+            $mbr = "0";
 
-            }
 
-            if (!isset($phone)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert phone "];
-                return response()->json($response, 200);
-            }
-            if (!isset($password)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert password "];
-                return response()->json($response, 200);
-            }
-            if (!isset($PAN)){
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert PAN "];
-                return response()->json($response, 200);
-            }
-            if (!isset($IPIN)){
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert IPIN "];
-                return response()->json($response, 200);
-            }
-            if (!isset($expDate)){
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert Expiration Date "];
-                return response()->json($response, 200);
-            }
-            if (self::isUsernameFound($userName)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Username Already Exists"];
-                return response()->json($response, 200);
-            }
-            if (self::isPhoneAlreadyRegistered($phone)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Phone Number Already Exists"];
-                return response()->json($response, 200);
-            }
+
             $user = new User();
             $user->username = $userName;
             $user->password = Hash::make($password);
@@ -202,6 +158,20 @@ class AuthController extends Controller
 
     public function activate(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+                'phone' => 'requierd|numeric',
+                'code' => 'required|numeric',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
+
+
+
         $phone = $request->json()->get("phone");
         $code = $request->json()->get("code");
 
@@ -247,6 +217,16 @@ class AuthController extends Controller
 
     public function resetPassword(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+                'phone' => 'requierd|numeric',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
         $phone = $request->json()->get("phone");
         if (self::isPhoneAlreadyRegistered($phone)) {
             $code = rand(100000, 999999);
@@ -269,6 +249,21 @@ class AuthController extends Controller
 
     public function resetPasswordWithCode(Request $request)
     {
+
+        $validator = Validator::make($request->all(),[
+                'phone' => 'requierd|numeric',
+                'code' => 'requierd|numeric',
+                'password' => 'requierd|string',
+            ]
+        );
+        if ($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
+
+
         $phone = $request->json()->get("phone");
         $code = $request->json()->get("code");
         $password = $request->json()->get("password");
@@ -293,12 +288,7 @@ class AuthController extends Controller
             return response()->json($response, 200);
 
         }
-        if (!self::isPhoneAlreadyRegistered($phone)) {
-            $response = array();
-            $response += ["error" => true];
-            $response += ["message" => "No Number Match this phone"];
-            return response()->json($response, 200);
-        }
+
         $validate = ResetPassword::where("phone", $phone)->where("code", $code)->get();
         if ($validate->isNotEmpty()) {
             $user = User::where("phone", $phone)->first();
@@ -309,6 +299,29 @@ class AuthController extends Controller
             $response += ["message" => "Password Have been Reset"];
             return response()->json($response, 200);
         }
+    }
+    public static function sendSMS($phone, $code)
+    {
+        $service_url = 'http://sms.iprosolution-sd.com/app/gateway/gateway.php'; //'http://api.unifonic.com/rest/Messages/Send';
+        $curl = curl_init($service_url);
+        $curl_post_data = array(
+            "sendmessage" => 1,
+            "username" => 'Sadad',
+            "password" => 'Sadad@123',
+            "text" => ' رمز التحقق هو  ' . $code,
+            "numbers" => $phone,
+            "sender" => 'Properties',
+        );
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+        $curl_response = curl_exec($curl);
+        curl_close($curl);
+    }
+    public static function isPhoneAlreadyRegistered($phone)
+    {
+        $user = User::where("phone", $phone)->get();
+        return $user->isEmpty() ? false : true;
     }
 
 }
