@@ -84,8 +84,8 @@ class AuthController extends Controller
 
             'username' => 'required|unique:users|string',
             'password' => 'required|string',
-            'PAN' => 'required|number|unique:bank_accounts',
-            'IPIN' => 'required|number',
+            'PAN' => 'required|numeric|min:16|max:19|unique:bank_accounts',
+            'IPIN' => 'required|numeric|min:4|max:4',
             'expDate' => 'required|date',
         ]);
 
