@@ -114,8 +114,7 @@ class AuthController extends Controller
                     'errors' => $validator->errors()->toArray()
                 ]);
             }
-        }
-        else{
+
             if (!isset($userName)) {
                 $response = array();
                 $response += ["error" => true];
