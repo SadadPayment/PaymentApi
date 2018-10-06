@@ -78,17 +78,28 @@ class AuthController extends Controller
 
     public function registration(Request $request)
     {
-        if ($request->isJson()) {
-            $request->validate([
-                'phone' => 'requierd|unique:users|number',
-                'fullName' => 'requierd|string',
+        $validator = Validator::make($request->all(),[
+            'phone' => 'required|unique:users|number',
+            'fullName' => 'required|string',
 
-                'username' => 'required|unique:users|string',
-                'password' => 'required|string',
-                'PAN' => 'required|number|unique:bank_accounts',
-                'IPIN' => 'required|number',
-                'expDate' => 'required|date',
+            'username' => 'required|unique:users|string',
+            'password' => 'required|string',
+            'PAN' => 'required|number|unique:bank_accounts',
+            'IPIN' => 'required|number',
+            'expDate' => 'required|date',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->toArray()
             ]);
+        }
+
+
+        if ($request->isJson()) {
+
+
             return response()->json($request,200);
 
 
