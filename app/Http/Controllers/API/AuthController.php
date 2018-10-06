@@ -78,23 +78,7 @@ class AuthController extends Controller
 
     public function registration(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'phone' => 'required|unique:users|number',
-            'fullName' => 'required|string',
 
-            'username' => 'required|unique:users|string',
-            'password' => 'required|string',
-            'PAN' => 'required|numeric|min:16|max:19|unique:bank_accounts',
-            'IPIN' => 'required|numeric|min:4|max:4',
-            'expDate' => 'required|date',
-        ]);
-
-        if ($validator->fails()){
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()->toArray()
-            ]);
-        }
 
 
         if ($request->isJson()) {
@@ -113,6 +97,25 @@ class AuthController extends Controller
             $expDate = $user->get("expDate");
             $mbr = "0";
 
+            $validator = Validator::make($request->all(),[
+                'phone' => 'required|unique:users|numeric',
+                'fullName' => 'required|string',
+
+                'username' => 'required|unique:users|string',
+                'password' => 'required|string',
+                'PAN' => 'required|numeric|min:16|max:19|unique:bank_accounts',
+                'IPIN' => 'required|numeric|min:4|max:4',
+                'expDate' => 'required|date',
+            ]);
+
+            if ($validator->fails()){
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+                ]);
+            }
+        }
+        else{
             if (!isset($userName)) {
                 $response = array();
                 $response += ["error" => true];
