@@ -18,7 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-//Route::group('/api/pay')
 Route::post("register" , "API\AuthController@registration")->middleware('cors');
 Route::post("activate" , "API\ApiController@activate");
 Route::post("login" , "API\ApiController@authenticate");
