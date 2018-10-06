@@ -84,7 +84,7 @@ class AuthController extends Controller
         if ($request->isJson()) {
 
 
-            return response()->json($request,200);
+            //return response()->json($request,200);
 
 
             $user = $request->json();
