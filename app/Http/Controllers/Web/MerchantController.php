@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Model\Merchant\Merchant as Merchant;
 
 use App\Model\Merchant\MerchantType;

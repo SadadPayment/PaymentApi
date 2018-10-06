@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Functions;
+use App\Http\Controllers\Controller;
 use App\Model\CardTransfer;
 use App\Model\Electricity;
 use App\Model\PublicKey;
@@ -39,8 +40,6 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp;
 use Illuminate\Http\Request;
-use ExternalServer\EBS;
-use ExternalServer\E15 as E15Server;
 use Meng\AsyncSoap\Guzzle\Factory;
 use Namshi\JOSE\JWT;
 use PHPUnit\Util\Json;
