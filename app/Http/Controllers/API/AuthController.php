@@ -101,7 +101,7 @@ class AuthController extends Controller
                 'phone' => 'required|unique:users|numeric',
                 'fullName' => 'required|string',
 
-                'username' => 'required|unique:users|string',
+                'userName' => 'required|unique:users|string',
                 'password' => 'required|string',
                 'PAN' => 'required|numeric|min:16|max:19|unique:bank_accounts',
                 'IPIN' => 'required|numeric|min:4|max:4',
