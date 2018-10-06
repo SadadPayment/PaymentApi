@@ -89,6 +89,7 @@ class AuthController extends Controller
                 'IPIN' => 'required|number',
                 'expDate' => 'required|date',
             ]);
+            return response()->json($request,200);
 
 
             $user = $request->json();
