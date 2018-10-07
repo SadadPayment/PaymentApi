@@ -24,8 +24,8 @@ class AuthController extends Controller
     {
 
         $validator = Validator::make($request->all(),[
-                'phone' => 'requierd',
-                'IPIN' => 'requierd',
+                'phone' => 'required',
+                'IPIN' => 'required',
             ]
         );
         if ($validator->fails()){
