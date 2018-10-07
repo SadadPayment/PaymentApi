@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class E15 extends Model
 {
     const Payment = "payment";
+    protected $table="e15s";
     //
     public function payment(){
         return $this->belongsTo('App\Model\Payment\Payment' , 'payment_id');
