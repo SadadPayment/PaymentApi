@@ -32,7 +32,7 @@ class PublicKey
     public static function sendRequest($ipin){
         $request = self::requestBuild();
         $response = SendRequest::sendRequest($request , self::PublicKey);
-        return base64_encode(self::encript($response->pubKeyValue , $request["UUID"] , $ipin));
+        return self::encript($response->pubKeyValue , $request["UUID"] , $ipin);
     }
     /*
      *  @Params :
@@ -50,6 +50,7 @@ class PublicKey
 
         $rsa->setEncryptionMode(RSA::ENCRYPTION_PKCS1);
         $ciphertext = $rsa->encrypt($uuid . $ipin);
+        $ciphertext =base64_encode($ciphertext);
         return $ciphertext;
     }
 }
