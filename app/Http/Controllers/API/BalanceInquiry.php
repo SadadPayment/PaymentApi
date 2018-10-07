@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Functions;
+use App\Http\Controllers\Controller;
 use App\Model\BalanceInquiryResponse;
 use App\Model\PublicKey;
 use App\Model\Response;

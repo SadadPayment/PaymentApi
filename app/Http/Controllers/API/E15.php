@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Functions;
+use App\Http\Controllers\Controller;
 use App\Model\Payment\Payment;
 use App\Model\Response\E15Response;
 use App\Model\Response\PaymentResponse;
