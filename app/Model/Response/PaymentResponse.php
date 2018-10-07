@@ -8,10 +8,10 @@ class PaymentResponse extends Model
 {
     //
     public function payment(){
-        return $this->belongsTo('App\Model\Payment' , 'payment_id');
+        return $this->belongsTo('App\Model\Payment\Payment' , 'payment_id');
     }
     public function response(){
-        return $this->belongsTo('App\Model\Response' , 'response_id');
+        return $this->belongsTo('App\Model\Response\Response' , 'response_id');
     }
     public static function savePaymentResponse($basicResonse, $payment, $response){
         $paymentResponse = new PaymentResponse();
