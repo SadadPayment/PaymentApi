@@ -17,9 +17,9 @@ class CreateTransfersTable extends Migration
             $table->increments('id');
             $table->integer('transaction_id')->unsigned();
             $table->foreign('transaction_id')->references('id')->on('transactions');
-            $table->double('amount');
-            $table->integer('type')->unsigned();
-            $table->foreign('type')->references('id')->on('transfer_types');
+            $table->string('amount');
+            $table->integer('type_id')->unsigned();
+            $table->foreign('type_id')->references('id')->on('transfer_types');
             $table->timestamps();
         });
     }
