@@ -21,7 +21,7 @@ class PaymentResponse extends Model
         $paymentResponse->acqTranFee = $response->acqTranFee;
         $paymentResponse->issuerTranFee = $response->issuerTranFee;
         $paymentResponse->billInfo = $response->billInfo != "" ? $response->billInfo : "";
-        $paymentResponse->balance = 0;
+        //$paymentResponse->balance = 0.0;
         $paymentResponse->save();
         return $paymentResponse;
     }

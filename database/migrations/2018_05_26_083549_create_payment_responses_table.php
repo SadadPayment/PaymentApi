@@ -17,7 +17,7 @@ class CreatePaymentResponsesTable extends Migration
             $table->increments('id');
             $table->integer('response_id')->unsigned();
             $table->integer('payment_id')->unsigned();
-            $table->double('balance');
+            $table->string('balance');
             $table->string('acqTranFee');
             $table->string('issuerTranFee');
             $table->string('billInfo');
