@@ -78,7 +78,7 @@ class CardTransfer extends Controller
             $card_transfer->toCard = $to;
             $card_transfer->save();
 
-            $ipin = PublicKey::sendRequest($ipin,$uuid);
+            $ipin = PublicKey::sendRequest($ipin);
             if ($ipin == false){
                 $res = array();
                 $res += ["error" => true];

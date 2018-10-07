@@ -94,7 +94,7 @@ class E15 extends Controller
             $transaction->status = "Send Request";
             $transaction->save();
 
-            $ipin = PublicKey::sendRequest($ipin,$uuid);
+            $ipin = PublicKey::sendRequest($ipin);
             if ($ipin == false){
                 $res = array();
                 $res +=["error" => true];

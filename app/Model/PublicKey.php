@@ -13,6 +13,7 @@ class PublicKey
     const PublicKey = "getPublicKey"; // the publicKey method in EBS Server
     public static function requestBuild($uuid){
         $tranDateTime = DateTime::getDateTime();
+        $uuid=Uuid::generate()->string;
         $applicationId = "Sadad";
         $request = array();
         $request += ["applicationId" => $applicationId];
@@ -28,8 +29,8 @@ class PublicKey
      *  @Return:
      *      Encripted ipin using the public key from EBS
      */
-    public static function sendRequest($ipin,$uuid){
-        $request = self::requestBuild($uuid);
+    public static function sendRequest($ipin){
+        $request = self::requestBuild();
         $response = SendRequest::sendRequest($request , self::PublicKey);
         return self::encript($response->pubKeyValue , $request["UUID"] , $ipin);
     }

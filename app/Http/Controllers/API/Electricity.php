@@ -88,7 +88,7 @@ class Electricity extends Controller
             $electricity->save();
 
 
-            $ipin = PublicKey::sendRequest($ipin,$uuid);
+            $ipin = PublicKey::sendRequest($ipin);
             if ($ipin == false){
                 $res = array();
                 $res += ["error" => true];
