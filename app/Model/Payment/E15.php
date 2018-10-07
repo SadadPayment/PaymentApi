@@ -53,6 +53,7 @@ class E15 extends Model
         $request += ["authenticationType" => $authenticationType];
         $request += ["fromAccountType" => "00"];
 
+        $request += ["payeeId" => "0010050001"];
 
         $tranCurrency = "SDG";
         //$tranAmount = $service->totalFees;
