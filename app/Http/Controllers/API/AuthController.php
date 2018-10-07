@@ -159,7 +159,7 @@ class AuthController extends Controller
     public function activate(Request $request)
     {
         $validator = Validator::make($request->all(),[
-                'phone' => 'requierd|numeric',
+                'phone' => 'required|numeric',
                 'code' => 'required|numeric',
             ]
         );
