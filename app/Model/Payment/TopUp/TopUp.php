@@ -81,7 +81,7 @@ class TopUp extends Model
         //echo $IPIN . "<br>";
         $request += ["authenticationType" => $authenticationType];
         $request += ["fromAccountType" => "00"];
-
+        dd($request);
         return $request;
         //$request->tranDateTime = $transaction->transDateTime;
     }
