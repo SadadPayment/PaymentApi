@@ -70,7 +70,7 @@ class Electricity extends Model
         $request += ["IPIN" => $ipin];
         $request += ["authenticationType" => $authenticationType];
         $request += ["fromAccountType" => "00"];
-        dd($request);
+        //dd($request);
         return $request;
     }
     public static function sendRequest($transaction_id , $ipin){
