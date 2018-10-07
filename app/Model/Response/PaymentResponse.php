@@ -17,8 +17,7 @@ class PaymentResponse extends Model
         $paymentResponse = new PaymentResponse();
         $paymentResponse->response()->associate($basicResonse);
         $paymentResponse->payment()->associate($payment);
-        dd($response);
-        $paymentResponse->balance = $response->balance;
+        $paymentResponse->balance = $response->balance->available;
         $paymentResponse->acqTranFee = $response->acqTranFee;
         $paymentResponse->issuerTranFee = $response->issuerTranFee;
         $paymentResponse->billInfo = $response->billInfo != "" ? $response->billInfo : "";
