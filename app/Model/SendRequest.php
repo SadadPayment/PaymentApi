@@ -16,8 +16,9 @@ class SendRequest
      *      json response from server OR false when timeout occuered
      */
     public static function sendRequest($req , $service){
-        //dd($req);
+        dd($req);
         $req_json = json_encode($req);
+
         try {
             $client = new Client(['verify' => false ]);
             $response = $client->request('POST', self::Server . $service, [
