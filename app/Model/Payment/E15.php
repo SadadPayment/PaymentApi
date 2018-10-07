@@ -27,7 +27,7 @@ class E15 extends Model
         $request += ["applicationId", "Sadad"];
         $request += ["tranDateTime", $transaction->transDateTime];
         $uuid = $transaction->uuid;
-        dd($uuid);
+        //dd($uuid);
         $request += ["UUID", $uuid];
         $userName = "";
         $userPassword = "";
