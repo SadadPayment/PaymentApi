@@ -124,32 +124,24 @@ class E15 extends Controller
 
 
             $json = array();
-
-            $json += ["response" => json_decode($response->getBody())];
-            if ($response->responseCode !=0){
-                $json += ["error" => true];
-                $json += ["message" => "There are some error"];
-                $json += ["response" => json_decode($response->getBody())];
-                return response()->json($json,200);
-            } else {
-                $bill_info=$response->billInfo;
-                $invoice_status = $bill_info->invoiceStatus;
-                $status = "";
-                if ($invoice_status == 0){
-                    $status = "CANCELED";
-                }
-                else if ($invoice_status == 1){
-                    $status = "PENDING";
-                }
-                else{
-                    $status = "PAID";
-                }
-                $json += ["error" => false];
-                $json += ["message" => "Done Successfully"];
-                $json += ["status" => $status];
-                $json += ["response" => $bill_info];
-                return response()->json($json,200);
+            $bill_info=$response->billInfo;
+            $invoice_status = $bill_info->invoiceStatus;
+            $status = "";
+            if ($invoice_status == 0){
+                $status = "CANCELED";
             }
+            else if ($invoice_status == 1){
+                $status = "PENDING";
+            }
+            else{
+                $status = "PAID";
+            }
+            $json += ["error" => false];
+            $json += ["message" => "Done Successfully"];
+            $json += ["status" => $status];
+            $json += ["response" => $bill_info];
+            return response()->json($json,200);
+
             //return response()->json($json,200);
 
 
