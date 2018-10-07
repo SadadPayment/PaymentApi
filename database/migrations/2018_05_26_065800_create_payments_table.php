@@ -20,7 +20,7 @@ class CreatePaymentsTable extends Migration
             //$table->foreign('service_id')->references('id')->on('merchant_services');
             $table->foreign('transaction_id')->references('id')->on('transactions');
             $table->timestamps();
-            $table->double('amount');
+            $table->string('amount');
             //$table->integer('payment_method')->unsigned();//->default(null);
             //$table->foreign('payment_method')->references('id')->on('account_types');
 
