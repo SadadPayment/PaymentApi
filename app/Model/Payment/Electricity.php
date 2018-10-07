@@ -12,6 +12,7 @@ class Electricity extends Model
 {
     //
     protected $fillable=['meter'];
+    protected $table="electricites";
     const Payment = "payment";
     //
 
