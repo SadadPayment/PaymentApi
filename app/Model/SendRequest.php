@@ -17,7 +17,7 @@ class SendRequest
      */
     public static function sendRequest($req , $service){
 //        dd($req);
-        $req_json= GuzzleHttp\json_encode($req,JSON_UNESCAPED_UNICODE );
+        $req_json= GuzzleHttp\json_encode($req);
         //$req_json = json_encode($req);
 
         try {
