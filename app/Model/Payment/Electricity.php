@@ -26,6 +26,7 @@ class Electricity extends Model
         $user = User::where("id",$transaction->user_id)->first();
         $payment = Payment::where("transaction_id", $transaction_id)->first();
         $electricity = Electricity::where("payment_id",$payment->id)->first();
+        dd($electricity);
 
         $tranCurrency = "SDG";
 
