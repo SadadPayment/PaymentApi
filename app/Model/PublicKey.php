@@ -11,7 +11,7 @@ class PublicKey
 {
     //
     const PublicKey = "getPublicKey"; // the publicKey method in EBS Server
-    public static function requestBuild($uuid){
+    public static function requestBuild(){
         $tranDateTime = DateTime::getDateTime();
         $uuid=Uuid::generate()->string;
         $applicationId = "Sadad";
