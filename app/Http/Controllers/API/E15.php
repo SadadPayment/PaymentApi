@@ -94,13 +94,15 @@ class E15 extends Controller
             $transaction->status = "Send Request";
             $transaction->save();
 
-            $ipin = PublicKey::sendRequest($ipin);
-            if ($ipin == false){
+            $publickKey = PublicKey::sendRequest();
+            //dd($ipin);
+            if ($publickKey == false){
                 $res = array();
-                $res +=["error" => true];
-                $res +=["message" => "Server Error"];
-                return response()->json($res , 200);
+                $res += ["error" => true];
+                $res += ["message" => "Server Error"];
+                return response()->json($res,200);
             }
+            $ipin = Functions::encript($publickKey , $uuid , $ipin);
 
 
             //$req = E15Model::requestBuild($transaction->id,$ipin,$type);

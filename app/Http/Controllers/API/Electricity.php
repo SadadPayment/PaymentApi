@@ -89,14 +89,15 @@ class Electricity extends Controller
             $electricity->save();
 
 
-            $ipin = PublicKey::sendRequest($ipin);
-            dd($ipin);
-            if ($ipin == false){
+            $publickKey = PublicKey::sendRequest();
+            //dd($ipin);
+            if ($publickKey == false){
                 $res = array();
                 $res += ["error" => true];
                 $res += ["message" => "Server Error"];
                 return response()->json($res,200);
             }
+            $ipin = Functions::encript($publickKey , $uuid , $ipin);
 
             $response = ElectricityModel::sendRequest($transaction->id  , $ipin);
 

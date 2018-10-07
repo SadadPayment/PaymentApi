@@ -7,6 +7,7 @@ use App\Model\Account\BankAccount;
 use App\Model\Account\MobileAccount;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use phpseclib\Crypt\RSA;
 
 class Functions
 {
@@ -54,5 +55,17 @@ class Functions
     public static function getAccountTypeId($account)
     {
         return AccountType::where("name", $account)->first();
+    }
+
+    public static function encript($publicKey, $uuid, $ipin)
+    {
+        $rsa = new RSA();
+
+        $rsa->loadKey($publicKey);
+
+        $rsa->setEncryptionMode(RSA::ENCRYPTION_PKCS1);
+        $ciphertext = $rsa->encrypt($uuid . $ipin);
+        $ciphertext =base64_encode($ciphertext);
+        return $ciphertext;
     }
 }

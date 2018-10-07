@@ -29,11 +29,11 @@ class PublicKey
      *  @Return:
      *      Encripted ipin using the public key from EBS
      */
-    public static function sendRequest($ipin){
+    public static function sendRequest(){
         //dd($ipin);
         $request = self::requestBuild();
         $response = SendRequest::sendRequest($request , self::PublicKey);
-        return self::encript($response->pubKeyValue , $request["UUID"] , $ipin);
+        return $response->pubKeyValue;
     }
     /*
      *  @Params :
@@ -43,15 +43,4 @@ class PublicKey
      *   @Return:
      *      Encripted ipin
      */
-    public static function encript($publicKey, $uuid, $ipin)
-    {
-        $rsa = new RSA();
-
-        $rsa->loadKey($publicKey);
-
-        $rsa->setEncryptionMode(RSA::ENCRYPTION_PKCS1);
-        $ciphertext = $rsa->encrypt($uuid . $ipin);
-        $ciphertext =base64_encode($ciphertext);
-        return $ciphertext;
-    }
 }

@@ -61,13 +61,15 @@ class BalanceInquiry extends Controller
             $balance_inquiry->account_type()->associate($accountType);
             $balance_inquiry->save();
 
-            $ipin = PublicKey::sendRequest($ipin);
-            if ($ipin == false){
+            $publickKey = PublicKey::sendRequest();
+            //dd($ipin);
+            if ($publickKey == false){
                 $res = array();
                 $res += ["error" => true];
                 $res += ["message" => "Server Error"];
                 return response()->json($res,200);
             }
+            $ipin = Functions::encript($publickKey , $uuid , $ipin);
 
             $response = BalanceInquiryModel::sendRequest($transaction->id , $ipin);
             $basicResonse = Response::saveBasicResponse($transaction, $response);

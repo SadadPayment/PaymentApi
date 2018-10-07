@@ -115,13 +115,15 @@ class TopUp extends Controller
             $transaction->save();
 
 
-            $ipin = PublicKey::sendRequest($ipin);
-            if ($ipin == false){
+            $publickKey = PublicKey::sendRequest();
+            //dd($ipin);
+            if ($publickKey == false){
                 $res = array();
-                $res +=["error" => true];
-                $res +=["message" => "Server Error"];
-                return response()->json($res , 200);
+                $res += ["error" => true];
+                $res += ["message" => "Server Error"];
+                return response()->json($res,200);
             }
+            $ipin = Functions::encript($publickKey , $uuid , $ipin);
             //$ipin = mb_convert_encoding($ipin , 'UTF-8' , 'UTF-8' );
 
             $response = TopUpModel::sendRequest($transaction->id , $ipin);
