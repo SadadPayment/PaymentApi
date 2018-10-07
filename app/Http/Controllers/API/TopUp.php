@@ -106,9 +106,9 @@ class TopUp extends Controller
             $topUp->payee_id=self::getPayeeId($biller);
             $topUp->save();
 
-            $type_id = self::getTopUpTypeId("TopUp");
-            //return response()->json(["type"=>$type_id],200);
-            $topUp = self::getTopUp($type_id, $biller_id);
+//            $type_id = self::getTopUpTypeId("TopUp");
+//            //return response()->json(["type"=>$type_id],200);
+//            $topUp = self::getTopUp($type_id, $biller_id);
             //return response()->json(["type"=>$topUp],200);
 
             $transaction->status = "Save Top Up";
