@@ -110,6 +110,13 @@ class E15 extends Controller
             $response = E15Model::sendRequest($transaction->id,$ipin,$type);
 
             $basicResonse = Response::saveBasicResponse($transaction, $response);
+            if ($basicResonse->responseCode != 0){
+                $response_json = array();
+                $response_json += ["error" => true];
+                $response_json += ["message" => "Server error"];
+                return response()->json($response_json,200);
+
+            }
             $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment , $response);
             self::saveE15Response($paymentResponse,$e15,$response);
 
