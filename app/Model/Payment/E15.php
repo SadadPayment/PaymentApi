@@ -24,11 +24,11 @@ class E15 extends Model
         $payment = Payment::where("transaction_id" , $transaction_id)->first();
         $e15 = E15::where("payment_id", $payment->id)->first();
 
-        $request += ["applicationId", "Sadad"];
-        $request += ["tranDateTime", $transaction->transDateTime];
+        $request += ["applicationId" => "Sadad"];
+        $request += ["tranDateTime" => $transaction->transDateTime];
         $uuid = $transaction->uuid;
         //dd($uuid);
-        $request += ["UUID", $uuid];
+        $request += ["UUID" => $uuid];
         $userName = "";
         $userPassword = "";
         $entityId = "";
