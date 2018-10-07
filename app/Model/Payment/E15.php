@@ -62,7 +62,7 @@ class E15 extends Model
         $paymentInfo = "SERVICEID=".$type."/INVOICENUMBER=".$e15->invoice_no."/PHONENUMBER=".$e15->phone;
         $request +=["paymentInfo" => $paymentInfo];
 
-        dd($request);
+        //dd($request);
         return $request;
     }
     public static function sendRequest($transaction_id , $ipin,$type){
