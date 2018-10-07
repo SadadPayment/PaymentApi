@@ -30,5 +30,7 @@ Route::post('balance_inquiry' , 'API\BalanceInquiry@balance_inquiry')->middlewar
 Route::post('cardTransfer' , 'API\CardTransfer@card_transfer')->middleware('jwt.auth');
 Route::post('electricity' , 'API\Electricity@electricity')->middleware('jwt.auth');
 Route::post('e15','API\E15@e15')->middleware('jwt.auth');
+Route::post('e15_payment','API\E15@e15_payment');
+Route::post('e15_inquery','API\E15@e15_inquery');
 
 
