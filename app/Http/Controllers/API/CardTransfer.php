@@ -79,7 +79,7 @@ class CardTransfer extends Controller
             $card_transfer->save();
 
             $publickKey = PublicKey::sendRequest();
-            //dd($ipin);
+            dd($ipin);
             if ($publickKey == false){
                 $res = array();
                 $res += ["error" => true];
