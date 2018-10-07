@@ -52,7 +52,7 @@ class TopUp extends Model
         $uuid = $transaction->uuid;
         $request += ["UUID" => $uuid];
         $request += ["tranCurrency" => $tranCurrency];
-        $request += ["tranAmount" => $payment->amount];
+        $request += ["tranAmount" => 3];
         $userName = "";
         $userPassword = "";
         $entityId = "";
@@ -81,7 +81,7 @@ class TopUp extends Model
         //echo $IPIN . "<br>";
         $request += ["authenticationType" => $authenticationType];
         $request += ["fromAccountType" => "00"];
-        dd($request);
+        //dd($request);
         return $request;
         //$request->tranDateTime = $transaction->transDateTime;
     }
