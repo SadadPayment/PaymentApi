@@ -57,7 +57,7 @@ class E15 extends Model
         $tranCurrency = "SDG";
         //$tranAmount = $service->totalFees;
         $request += ["tranCurrency" => $tranCurrency];
-        $request += ["tranAmount" => $e15->amount];
+        $request += ["tranAmount" => $payment->amount];
 
         $paymentInfo = "SERVICEID=".$type."/INVOICENUMBER=".$e15->invoice_no."/PHONENUMBER=".$e15->phone;
         $request +=["paymentInfo" => $paymentInfo];
