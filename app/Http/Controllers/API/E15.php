@@ -107,7 +107,7 @@ class E15 extends Controller
 
 
             //$req = E15Model::requestBuild($transaction->id,$ipin,$type);
-            $response = json_decode(E15Model::sendRequest($transaction->id,$ipin,$type));
+            $response = E15Model::sendRequest($transaction->id,$ipin,$type);
 
             $basicResonse = Response::saveBasicResponse($transaction, $response);
             $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment , $response);
