@@ -84,6 +84,7 @@ class Electricity extends Controller
             $transaction->save();
 
             $electricity = new ElectricityModel();
+            $electricity->payment()->associate($payment);
             $electricity->meter = $meter;
             $electricity->save();
 
