@@ -12,6 +12,6 @@ class TopUpResponse extends Model
         return $this->belongsTo('App\Model\Response\PaymentResponse' , 'payment_response_id');
     }
     public function TopUp(){
-        return $this->belongsTo('App\Model\Payment\TopUp' , 'top_up_id');
+        return $this->belongsTo('App\Model\Payment\TopUp\TopUp' , 'top_up_id');
     }
 }
