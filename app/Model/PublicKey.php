@@ -32,7 +32,6 @@ class PublicKey
     public static function sendRequest($ipin){
         $request = self::requestBuild();
         $response = SendRequest::sendRequest($request , self::PublicKey);
-        dd($request["UUID"]);
         return self::encript($response->pubKeyValue , $request["UUID"] , $ipin);
     }
     /*
