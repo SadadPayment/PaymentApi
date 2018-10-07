@@ -16,6 +16,7 @@ class SendRequest
      *      json response from server OR false when timeout occuered
      */
     public static function sendRequest($req , $service){
+        dd($req);
         $req_json = GuzzleHttp\json_encode($req);
         try {
             $client = new Client(['verify' => false ]);
