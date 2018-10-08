@@ -31,10 +31,16 @@ class CardTransfer extends Controller
             ]);
 
             if ($validator->fails()){
-                return response()->json([
-                    'error' => true,
-                    'errors' => $validator->errors()->toArray()
-                ]);
+
+                $error = $validator->errors()->toArray();
+                foreach ($error as $err){
+                    return response()->json([
+                        'error' => true,
+                        'message' => $err
+                    ]);
+                }
+
+
             }
             $to = $request->json()->get("to");
             $amount = $request->json()->get("amount");
