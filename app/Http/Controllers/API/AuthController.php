@@ -30,7 +30,7 @@ class AuthController extends Controller
         );
         if ($validator->fails()){
             return response()->json([
-                'success' => false,
+                'error' => false,
                 'errors' => $validator->errors()->toArray()
             ]);
         }
@@ -110,7 +110,7 @@ class AuthController extends Controller
 
             if ($validator->fails()){
                 return response()->json([
-                    'success' => false,
+                    'error' => false,
                     'errors' => $validator->errors()->toArray()
                 ]);
             }
@@ -165,7 +165,7 @@ class AuthController extends Controller
         );
         if ($validator->fails()){
             return response()->json([
-                'success' => false,
+                'error' => false,
                 'errors' => $validator->errors()->toArray()
             ]);
         }
@@ -176,26 +176,6 @@ class AuthController extends Controller
         $code = $request->json()->get("code");
 
 
-        if (!isset($phone)) {
-            $response = array();
-            $response += ["error" => true];
-            $response += ["message" => "Insert phone "];
-            return response()->json($response, 200);
-        }
-
-        if (!isset($code)) {
-            $response = array();
-            $response += ["error" => true];
-            $response += ["message" => "Insert code "];
-            return response()->json($response, 200);
-
-        }
-        if (!self::isPhoneAlreadyRegistered($phone)) {
-            $response = array();
-            $response += ["error" => true];
-            $response += ["message" => "No Number Match this phone"];
-            return response()->json($response, 200);
-        }
         $validate = UserValidation::where("phone", $phone)->where("code", $code)->get();
         if ($validate->isNotEmpty()) {
             $user = User::where("phone", $phone)->first();
@@ -223,12 +203,11 @@ class AuthController extends Controller
         );
         if ($validator->fails()){
             return response()->json([
-                'success' => false,
+                'error' => false,
                 'errors' => $validator->errors()->toArray()
             ]);
         }
         $phone = $request->json()->get("phone");
-        if (self::isPhoneAlreadyRegistered($phone)) {
             $code = rand(100000, 999999);
             $validate = new ResetPassword();
             $validate->phone = $phone;
@@ -240,11 +219,6 @@ class AuthController extends Controller
             $response += ["message" => "Code Have Been Sended to Your Phone"];
             //$response +=["code" => $code];
             return response()->json($response, 200);
-        }
-        $response = array();
-        $response += ["error" => true];
-        $response += ["message" => "No Number Match this phone"];
-        return response()->json($response, 200);
     }
 
     public function resetPasswordWithCode(Request $request)
@@ -258,7 +232,7 @@ class AuthController extends Controller
         );
         if ($validator->fails()){
             return response()->json([
-                'success' => false,
+                'error' => false,
                 'errors' => $validator->errors()->toArray()
             ]);
         }
@@ -267,27 +241,6 @@ class AuthController extends Controller
         $phone = $request->json()->get("phone");
         $code = $request->json()->get("code");
         $password = $request->json()->get("password");
-        if (!isset($phone)) {
-            $response = array();
-            $response += ["error" => true];
-            $response += ["message" => "Insert phone "];
-            return response()->json($response, 200);
-        }
-
-        if (!isset($code)) {
-            $response = array();
-            $response += ["error" => true];
-            $response += ["message" => "Insert code "];
-            return response()->json($response, 200);
-
-        }
-        if (!isset($password)) {
-            $response = array();
-            $response += ["error" => true];
-            $response += ["message" => "You Forget The New Password"];
-            return response()->json($response, 200);
-
-        }
 
         $validate = ResetPassword::where("phone", $phone)->where("code", $code)->get();
         if ($validate->isNotEmpty()) {
@@ -299,6 +252,10 @@ class AuthController extends Controller
             $response += ["message" => "Password Have been Reset"];
             return response()->json($response, 200);
         }
+        $response = array();
+        $response += ["error" => true];
+        $response += ["message" => "Error"];
+        return response()->json($response, 200);
     }
     public static function sendSMS($phone, $code)
     {
@@ -317,11 +274,6 @@ class AuthController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
         $curl_response = curl_exec($curl);
         curl_close($curl);
-    }
-    public static function isPhoneAlreadyRegistered($phone)
-    {
-        $user = User::where("phone", $phone)->get();
-        return $user->isEmpty() ? false : true;
     }
 
 }
