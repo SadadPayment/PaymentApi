@@ -33,7 +33,9 @@ class PublicKey
         //dd($ipin);
         $request = self::requestBuild();
         $response = SendRequest::sendRequest($request , self::PublicKey);
-        return $response->pubKeyValue;
+        if ($response != false)
+            return $response->pubKeyValue;
+        return false;
     }
     /*
      *  @Params :
