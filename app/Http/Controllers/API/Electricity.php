@@ -27,7 +27,7 @@ class Electricity extends Controller
             $user = $token->authenticate();
             $validator = Validator::make($request->all(),[
 
-                'meter' => 'required|numeric|digits_between:11,11',
+                'meter' => 'required|numeric|digits_between:10,12',
                 'amount' => 'required|numeric',
                 'IPIN' => 'required|numeric|digits_between:4,4',
             ]);
