@@ -30,7 +30,7 @@ class ElectHistoryApiController extends Controller
             $payment =Payment::where("transaction_id" , $transaction->id)->first();
             $electricity =\App\Model\Payment\Electricity::where("payment_id" , $payment->id)->first();
             $electriciy_response = ElectricityResponse::where("electricity_id" , $electricity->id)->first();
-            $response += $electriciy_response;
+            $response[]= $electriciy_response;
         }
         return response()->json(['data'=>$response]);
     }
