@@ -108,12 +108,20 @@ class AuthController extends Controller
                 'expDate' => 'required|date',
             ]);
 
-            if ($validator->fails()){
+            $error = $validator->errors()->toArray();
+            foreach ($error as $err){
                 return response()->json([
                     'error' => true,
-                    'errors' => $validator->errors()->toArray()
+                    'message' => $err
                 ]);
             }
+
+//            if ($validator->fails()){
+//                return response()->json([
+//                    'error' => true,
+//                    'errors' => $validator->errors()->toArray()
+//                ]);
+//            }
 
 
             $user = $request->json();
