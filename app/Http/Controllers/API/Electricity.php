@@ -111,7 +111,7 @@ class Electricity extends Controller
                 $transaction->save();
                 $res = array();
                 $res += ["error" => true];
-                $res += ["EBS" , $response];
+                $res += ["EBS" => $response];
 
                 return response()->json($res, '200');
             }
