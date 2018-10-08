@@ -6,7 +6,7 @@ use App\Functions;
 use App\Http\Controllers\Controller;
 use App\Model\BalanceInquiryResponse;
 use App\Model\PublicKey;
-use App\Model\Response;
+use App\Model\Response\Response;
 use App\Model\Transaction;
 use App\Model\TransactionType;
 use Illuminate\Http\Request;
@@ -72,8 +72,8 @@ class BalanceInquiry extends Controller
             $ipin = Functions::encript($publickKey , $uuid , $ipin);
 
             $response = BalanceInquiryModel::sendRequest($transaction->id , $ipin);
-            $basicResonse = Response::saveBasicResponse($transaction, $response);
-            $balance_inquiry_reponse = self::saveBalanceInquiryResonse($basicResonse,$balance_inquiry,$response);
+            //$basicResonse = Response::saveBasicResponse($transaction, $response);
+            //$balance_inquiry_reponse = self::saveBalanceInquiryResonse($basicResonse,$balance_inquiry,$response);
 
             if ($response->responseCode != 0){
                 $res = array();
@@ -95,17 +95,5 @@ class BalanceInquiry extends Controller
             $response += ["message" => "Request Must Send In Json"];
             return response()->json($response,200);
         }
-    }
-    public static function saveBalanceInquiryResonse($basicResonse , $balance_inquiry,$response){
-        $balance_inquiry_response = new BalanceInquiryResponse();
-        $balance_inquiry_response->response()->associate($basicResonse);
-        $balance_inquiry_response->balanceInquiry()->associate($balance_inquiry);
-        $balance_inquiry_response->balance = $response->balance;
-        $balance_inquiry_response->acqTranFee = $response->acqTranFee;
-        $balance_inquiry_response->issuerTranFee = $response->issuerTranFee;
-        $balance_inquiry_response->issuerTranFee = $response->issuerTranFee;
-        $balance_inquiry_response->save();
-        return $balance_inquiry_response;
-
     }
 }

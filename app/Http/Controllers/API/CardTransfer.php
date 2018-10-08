@@ -90,7 +90,7 @@ class CardTransfer extends Controller
 
             $response = CardTransferModel::sendRequest($transaction->id,$ipin);
             if ($response->responseCode != 0){
-                dd($response);
+                //dd($response);
                 $res = array();
                 $res += ["error" => true];
                 $res += ["message" => "Some Error Found"];
