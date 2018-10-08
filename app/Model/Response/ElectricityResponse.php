@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ElectricityResponse extends Model
 {
-    protected $fillable = ["meterFees" , "netAmount" , "uinitsInKWh" , "waterFees" , "token" , "customerName" , "operatorMessage"];
+    protected $fillable = ["meterFees" , "netAmount" , "unitsInKWh" , "waterFees" , "token" , "customerName" , "operatorMessage"];
     //
     public function PaymentResponse(){
         return $this->belongsTo('App\Model\Response\PaymentResponse' , 'payment_response_id');
