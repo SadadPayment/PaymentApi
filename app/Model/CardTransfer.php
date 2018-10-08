@@ -35,9 +35,9 @@ class CardTransfer extends Model
         $mbr = $bank->mbr;
         $expDate = $bank->expDate;
         //}
-        $request += ["applicationId", "Sadad"];
-        $request += ["tranDateTime", $transaction->transDateTime];
-        $request += ["UUID", $uuid];
+        $request += ["applicationId" => "Sadad"];
+        $request += ["tranDateTime" => $transaction->transDateTime];
+        $request += ["UUID" => $uuid];
         $request += ["userName" => $userName];
         $request += ["userPassword" => $userPassword];
         $request += ["entityId" => $entityId];
