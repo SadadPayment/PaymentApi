@@ -117,14 +117,25 @@ class TopUp extends Controller
             //$ipin = mb_convert_encoding($ipin , 'UTF-8' , 'UTF-8' );
 
             $response = TopUpModel::sendRequest($transaction->id , $ipin);
-            $basicResonse = Response::saveBasicResponse($transaction, $response);
-            $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment, $response);
-            self::saveTopUp($paymentResponse , $topUp , $response);
-            $transaction->status = "done";
-            $transaction->save();
-            return response()->json($response, '200');
+            if ($response->responseCode != 0){
+                $transaction->status = "Server Error";
+                $transaction->save();
+                $res = array();
+                $res += ["error" => true];
+                $res += ["EBS" , $response];
+
+                return response()->json($res, '200');
+            }
+            else {
+                $basicResonse = Response::saveBasicResponse($transaction, $response);
+                $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment, $response);
+                self::saveTopUp($paymentResponse, $topUp, $response);
+                $transaction->status = "done";
+                $transaction->save();
+                return response()->json($response, '200');
 
 
+            }
         } else {
             $response = array();
             $response += ["error" => true];

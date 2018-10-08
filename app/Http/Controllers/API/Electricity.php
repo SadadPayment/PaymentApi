@@ -101,11 +101,10 @@ class Electricity extends Controller
             }
             $ipin = Functions::encript($publickKey , $uuid , $ipin);
 
-            $response = ElectricityModel::sendRequest($transaction->id  , $ipin);
 
-            $basicResonse = Response::saveBasicResponse($transaction, $response);
-            $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment, $response);
-            $electriciyResponse = self::saveElectriciyResponse($paymentResponse , $electricity , $response);
+
+
+            $response = ElectricityModel::sendRequest($transaction->id  , $ipin);
 
             if ($response->responseCode != 0){
                 $transaction->status = "Server Error";
@@ -116,7 +115,16 @@ class Electricity extends Controller
 
                 return response()->json($res, '200');
             }
+
+
+
+
+
             else{
+                $basicResonse = Response::saveBasicResponse($transaction, $response);
+
+                $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment, $response);
+                $electriciyResponse = self::saveElectriciyResponse($paymentResponse , $electricity , $response);
                 $transaction->status = "done";
                 $transaction->save();
                 $res = array();
