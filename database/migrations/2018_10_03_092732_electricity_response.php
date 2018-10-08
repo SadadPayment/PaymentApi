@@ -25,7 +25,7 @@ class ElectricityResponse extends Migration
             $table->string('waterFees');
             $table->string('token');
             $table->string('customerName');
-            $table->string('operatorMessage');
+            $table->string('opertorMessage');
             $table->timestamps();
         });
     }
