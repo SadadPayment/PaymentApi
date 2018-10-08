@@ -29,16 +29,9 @@ class AuthController extends Controller
             ]
         );
         if ($validator->fails()){
-            $array = array();
-            $i=0;
-            foreach ($validator->errors()->all() as $error){
-                $array = [$i => $error];
-                $i++;
-            }
-
             return response()->json([
                 'error' => true,
-                'errors' => $array
+                'errors' => $validator->errors()->toArray()
             ]);
         }
 
@@ -115,18 +108,10 @@ class AuthController extends Controller
                 'expDate' => 'required|date',
             ]);
 
-
             if ($validator->fails()){
-                $array = array();
-                $i=0;
-                foreach ($validator->errors()->all() as $error){
-                    $array = [$i => $error];
-                    $i++;
-                }
-
                 return response()->json([
                     'error' => true,
-                    'errors' => $array
+                    'errors' => $validator->errors()->toArray()
                 ]);
             }
 
@@ -179,16 +164,9 @@ class AuthController extends Controller
             ]
         );
         if ($validator->fails()){
-            $array = array();
-            $i=0;
-            foreach ($validator->errors()->all() as $error){
-                $array = [$i => $error];
-                $i++;
-            }
-
             return response()->json([
                 'error' => true,
-                'errors' => $array
+                'errors' => $validator->errors()->toArray()
             ]);
         }
 
@@ -224,16 +202,9 @@ class AuthController extends Controller
             ]
         );
         if ($validator->fails()){
-            $array = array();
-            $i=0;
-            foreach ($validator->errors()->all() as $error){
-                $array = [$i => $error];
-                $i++;
-            }
-
             return response()->json([
                 'error' => true,
-                'errors' => $array
+                'errors' => $validator->errors()->toArray()
             ]);
         }
         $phone = $request->json()->get("phone");
@@ -260,16 +231,9 @@ class AuthController extends Controller
             ]
         );
         if ($validator->fails()){
-            $array = array();
-            $i=0;
-            foreach ($validator->errors()->all() as $error){
-                $array = [$i => $error];
-                $i++;
-            }
-
             return response()->json([
-                'error' => true,
-                'errors' => $array
+                'error' => false,
+                'errors' => $validator->errors()->toArray()
             ]);
         }
 
