@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Model\Payment\TopUp\TopUp as TopUpModel;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Validator;
 use Webpatser\Uuid\Uuid;
 
 class TopUp extends Controller
@@ -30,7 +31,20 @@ class TopUp extends Controller
         if ($request->isJson()) {
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();
+            $validator = Validator::make($request->all(),[
 
+                'phone' => 'required|numeric',
+                'biller' => 'required|string',
+                'amount' => 'required|numeric',
+                'IPIN' => 'required|numeric|digits_between:4,4',
+            ]);
+
+            if ($validator->fails()){
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+                ]);
+            }
             //$user = JWTAuth::toUser($token);
             /******   Create Transaction Object  *********/
             $transaction = new Transaction();
@@ -40,36 +54,12 @@ class TopUp extends Controller
             $amount = $request->json()->get("amount");
             $ipin = $request->json()->get("IPIN");
             $bank = Functions::getBankAccountByUser($user);
-            if (!isset($ipin)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert IPIN Code "];
-                return response()->json($response, 200);
-            }
+
             if ($ipin !== $bank->IPIN){
                 $response = array();
                 $response = ["error" => true];
                 $response = ["message" => "Wrong IPIN Code"];
                 return response()->json($response,200);
-            }
-            if (!isset($phone)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert phone "];
-                return response()->json($response, 200);
-            }
-            if (!isset($biller)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert biller "];
-                return response()->json($response, 200);
-
-            }
-            if (!isset($amount)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert amount "];
-                return response()->json($response, 200);
             }
             $account = array();
             $account += ["PAN" => $bank->PAN];

@@ -11,6 +11,7 @@ use App\Model\Transaction;
 use App\Model\TransactionType;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Validator;
 use Webpatser\Uuid\Uuid;
 use App\Model\BalanceInquiry as BalanceInquiryModel;
 
@@ -23,6 +24,17 @@ class BalanceInquiry extends Controller
         if ($request->isJson()){
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();
+            $validator = Validator::make($request->all(),[
+
+                'IPIN' => 'required|numeric|digits_between:4,4',
+            ]);
+
+            if ($validator->fails()){
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+                ]);
+            }
             $ipin = $request->json()->get("IPIN");
             $bank = Functions::getBankAccountByUser($user);
             $account = array();

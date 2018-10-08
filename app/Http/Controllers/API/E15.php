@@ -13,6 +13,7 @@ use App\Model\Transaction;
 use App\Model\TransactionType;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Validator;
 use Webpatser\Uuid\Uuid;
 use App\Model\Payment\E15 as E15Model;
 
@@ -24,6 +25,20 @@ class E15 extends Controller
         if ($request->isJson()) {
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();
+
+            $validator = Validator::make($request->all(),[
+                    'phone' => 'required|numeric',
+                    'IPIN' => 'required|numeric|digits_between:4,4',
+                    'amount' => 'required|numeric',
+                    'invoiceNo' => 'required|numeric',
+                ]
+            );
+            if ($validator->fails()){
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+                ]);
+            }
 
             //$user = JWTAuth::toUser($token);
             /******   Create Transaction Object  *********/
@@ -42,27 +57,6 @@ class E15 extends Controller
                 $response = ["error" => true];
                 $response = ["message" => "Wrong IPIN Code"];
                 return response()->json($response,200);
-            }
-            if (!isset($invoice)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert Invoice Number "];
-                return response()->json($response, 200);
-            }
-
-            if (!isset($amount)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert Amount "];
-                return response()->json($response, 200);
-
-            }
-
-            if (!isset($phone)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert phone "];
-                return response()->json($response, 200);
             }
 
             $transaction = new Transaction();

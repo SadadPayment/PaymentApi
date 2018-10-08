@@ -11,6 +11,7 @@ use App\Model\Transfer;
 use App\Model\TransferType;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Validator;
 use Webpatser\Uuid\Uuid;
 use App\Model\CardTransfer as CardTransferModel;
 
@@ -22,6 +23,19 @@ class CardTransfer extends Controller
         if ($request->isJson()){
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();
+            $validator = Validator::make($request->all(),[
+
+                'to' => 'required|numeric|digits_between:16,19',
+                'amount' => 'required|numeric',
+                'IPIN' => 'required|numeric|digits_between:4,4',
+            ]);
+
+            if ($validator->fails()){
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+                ]);
+            }
             $to = $request->json()->get("to");
             $amount = $request->json()->get("amount");
             $ipin =  $request->json()->get("IPIN");
@@ -38,18 +52,7 @@ class CardTransfer extends Controller
             $account += ["expDate" => $bank->expDate];
             $account += ["mbr" => $bank->mbr];
 
-            if (!isset($amount)){
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Send Amount with the request"];
-                return response()->json($response,200);
-            }
-            if (!isset($to)){
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Send The Card Number You want to send To"];
-                return response()->json($response,200);
-            }
+
 
             //$user = JWTAuth::toUser($token);
             /******   Create Transaction Object  *********/

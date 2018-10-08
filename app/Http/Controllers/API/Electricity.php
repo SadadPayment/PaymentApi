@@ -13,6 +13,7 @@ use App\Model\TransactionType;
 use App\Model\Response\ElectricityResponse;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Validator;
 use Webpatser\Uuid\Uuid;
 use App\Model\Payment\Electricity as ElectricityModel;
 
@@ -24,6 +25,19 @@ class Electricity extends Controller
         if ($request->isJson()) {
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();
+            $validator = Validator::make($request->all(),[
+
+                'meter' => 'required|numeric',
+                'amount' => 'required|numeric',
+                'IPIN' => 'required|numeric|digits_between:4,4',
+            ]);
+
+            if ($validator->fails()){
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors()->toArray()
+                ]);
+            }
             //$user = JWTAuth::toUser($token);
             /******   Create Transaction Object  *********/
             $transaction = new Transaction();
@@ -38,18 +52,6 @@ class Electricity extends Controller
                 $response = ["error" => true];
                 $response = ["message" => "Wrong IPIN Code"];
                 return response()->json($response,200);
-            }
-            if (!isset($meter)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert Meter Number "];
-                return response()->json($response, 200);
-            }
-            if (!isset($amount)) {
-                $response = array();
-                $response += ["error" => true];
-                $response += ["message" => "Insert amount "];
-                return response()->json($response, 200);
             }
             $account += ["PAN" => $bank->PAN];
             $account += ["IPIN" => $bank->IPIN];
