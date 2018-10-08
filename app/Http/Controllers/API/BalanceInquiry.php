@@ -21,6 +21,8 @@ class BalanceInquiry extends Controller
 
     public function balance_inquiry(Request $request){
 
+
+
         if ($request->isJson()){
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();

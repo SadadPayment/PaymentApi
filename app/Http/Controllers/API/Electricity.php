@@ -22,6 +22,7 @@ class Electricity extends Controller
     //
     public function electricity(Request $request)
     {
+        return response()->json($request->all(),200);
         if ($request->isJson()) {
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();
