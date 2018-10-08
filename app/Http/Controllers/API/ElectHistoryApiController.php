@@ -34,7 +34,8 @@ class ElectHistoryApiController extends Controller
 
             $electriciy_response = ElectricityResponse::where("electricity_id" , $electricity->id)->first();
 
-            $response[]= $electriciy_response;
+            if ($electriciy_response != null)
+                $response[]= $electriciy_response;
         }
         return response()->json(['data'=>$response]);
     }
