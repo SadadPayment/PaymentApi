@@ -29,7 +29,7 @@ class CardTransfer extends Model
         $entityId = "";
         $entityType = "";
         $authenticationType = "00";
-        $bank = BankAccount::where("user_id", $user->id)->first();
+        $bank = BankAccount::getBankAccountByUser($user);
         $PAN = $bank->PAN;
 
         $mbr = $bank->mbr;
