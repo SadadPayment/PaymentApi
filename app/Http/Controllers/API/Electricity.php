@@ -150,7 +150,16 @@ class Electricity extends Controller
         $electriciy_response->Electriciy()->associate($electricity);
         $bill_info = $response->billInfo;
         dd($bill_info);
+
         $electriciy_response->fill($bill_info);
+        $electriciy_response->meterFees = $bill_info->meterFees;
+        $electriciy_response->netAmount = $bill_info->netAmount;
+        $electriciy_response->uinitsInKWh = $bill_info->uinitsInKWh;
+        $electriciy_response->uinitsInKWh = $bill_info->uinitsInKWh;
+        $electriciy_response->waterFees = $bill_info->waterFees;
+        $electriciy_response->token = $bill_info->token;
+        $electriciy_response->customerName = $bill_info->customerName;
+        $electriciy_response->operatorMessage = $bill_info->operatorMessage;
         $electriciy_response->save();
         return $electriciy_response;
     }
