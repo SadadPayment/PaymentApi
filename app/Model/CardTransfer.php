@@ -15,7 +15,7 @@ class CardTransfer extends Model
     public static function requestBuild($transaction_id , $ipin){
         $request = array();
         $transaction = Transaction::where("id", $transaction_id)->first();
-        $user = $transaction->user();
+        $user = User::where("id",$transaction->user_id)->first();
         $transfer = Transfer::where("transaction_id", $transaction_id)->first();
         $card_transfer = CardTransfer::where("transfer_id",$transfer->id)->first();
 

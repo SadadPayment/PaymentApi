@@ -19,7 +19,7 @@ class BalanceInquiry extends Model
     public static function requestBuild($transaction_id , $ipin){
         $request = array();
         $transaction = Transaction::where("id", $transaction_id)->first();
-        $user = $transaction->user();
+        $user = User::where("id",$transaction->user_id)->first();
         $balance_inquiry = BalanceInquiry::where("transaction_id", $transaction_id)->first();
         $request += ["applicationId", "Sadad"];
         $request += ["tranDateTime", $transaction->transDateTime];
