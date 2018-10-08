@@ -29,6 +29,8 @@ class Electricity extends Controller
         $info += ["unitsInKWh" => "66.7"];
         $info += ["waterFees" => ""];
         $info += ["token" => "07246305192693082213"];
+        $info += ["customerName" => "ALSAFIE BAKHIEYT HEMYDAN"];
+        $info += ["opertorMessage" => "Credit Purchase"];
 
         $res += ["error" => false];
         $res += ["message" => "Done Successfully"];
