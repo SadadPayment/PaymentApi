@@ -11,6 +11,6 @@ class Transfer extends Model
         return $this->belongsTo('App\Model\Transaction');
     }
     public function type(){
-        return $this->belongsTo('App\Model\TransferType');
+        return $this->belongsTo('App\Model\TransferType' , 'type_id');
     }
 }

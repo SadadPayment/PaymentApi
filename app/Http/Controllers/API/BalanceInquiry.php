@@ -26,7 +26,7 @@ class BalanceInquiry extends Controller
             $ipin = $request->json()->get("IPIN");
             $bank = Functions::getBankAccountByUser($user);
             $account = array();
-            if ($ipin == $bank->IPIN){
+            if ($ipin !== $bank->IPIN){
                 $response = array();
                 $response = ["error" => true];
                 $response = ["message" => "Wrong IPIN Code"];
