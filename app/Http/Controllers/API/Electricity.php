@@ -148,9 +148,9 @@ class Electricity extends Controller
         $electriciy_response = new ElectricityResponse();
         $electriciy_response->PaymentResponse()->associate($paymentResponse);
         $electriciy_response->Electriciy()->associate($electricity);
-        $bill_info = (array) $response->billInfo;
+        $bill_info = /*(array)*/ $response->billInfo;
 
-        //dd($bill_info);
+        dd($bill_info);
 
         //$electriciy_response->
         $electriciy_response->fill($bill_info);
