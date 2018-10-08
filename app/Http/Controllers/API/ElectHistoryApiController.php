@@ -25,7 +25,7 @@ class ElectHistoryApiController extends Controller
         $user = $token->authenticate();
 
         $transction_type = TransactionType::where('name', "Electericity")->pluck('id')->first();
-        $tran = Transaction::where('user_id', '=', $user->id)->where("transaction_type",$transction_type->id)->get();
+        $tran = Transaction::where('user_id', '=', $user->id)->where("transaction_type",$transction_type)->get();
         foreach ($tran as $transaction ){
             $payment =Payment::where("transaction_id" , $transaction->id)->first();
             $electricity =\App\Model\Payment\Electricity::where("payment_id" , $payment->id)->first();
