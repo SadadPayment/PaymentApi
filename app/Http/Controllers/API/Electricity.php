@@ -33,9 +33,16 @@ class Electricity extends Controller
             ]);
 
             if ($validator->fails()){
+                $array = array();
+                $i=0;
+                foreach ($validator->errors()->all() as $error){
+                    $array = [$i => $error];
+                    $i++;
+                }
+
                 return response()->json([
                     'error' => true,
-                    'errors' => $validator->errors()->toArray()
+                    'errors' => $array
                 ]);
             }
             //$user = JWTAuth::toUser($token);
