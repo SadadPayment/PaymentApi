@@ -33,3 +33,4 @@ Route::post('e15_payment','API\E15@e15_payment');
 Route::post('e15_inquery','API\E15@e15_inquery');
 
 
+Route::get('getByUsers', 'API\ElectHistoryApiController@getByUsers');
