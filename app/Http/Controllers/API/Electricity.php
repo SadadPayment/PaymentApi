@@ -133,7 +133,7 @@ class Electricity extends Controller
                 $res += ["message" => "Done Successfully"];
                 $res += ["info" => $info];
 
-                return response()->json($response, '200');
+                return response()->json($res, '200');
             }
 
 
