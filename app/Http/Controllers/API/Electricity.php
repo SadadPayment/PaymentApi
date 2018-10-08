@@ -34,7 +34,7 @@ class Electricity extends Controller
 
             if ($validator->fails()){
                 return response()->json([
-                    'error' => false,
+                    'error' => true,
                     'errors' => $validator->errors()->toArray()
                 ]);
             }
