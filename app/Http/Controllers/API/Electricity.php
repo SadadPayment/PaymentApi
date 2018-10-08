@@ -105,7 +105,7 @@ class Electricity extends Controller
 
             $basicResonse = Response::saveBasicResponse($transaction, $response);
             $paymentResponse = PaymentResponse::savePaymentResponse($basicResonse, $payment, $response);
-            //$electriciyResponse =
+            $electriciyResponse = self::saveElectriciyResponse($paymentResponse , $electricity , $response);
 
             if ($response->responseCode != 0){
                 $transaction->status = "Server Error";
