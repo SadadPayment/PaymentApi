@@ -21,7 +21,7 @@ class ElectricityResponse extends Migration
             $table->foreign('payment_response_id')->references('id')->on('payment_responses');
             $table->string('meterFees');
             $table->string('netAmount');
-            $table->string('uinitsInKWh');
+            $table->string('unitsInKWh');
             $table->string('waterFees');
             $table->string('token');
             $table->string('customerName');
