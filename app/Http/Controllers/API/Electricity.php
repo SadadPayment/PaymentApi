@@ -149,6 +149,7 @@ class Electricity extends Controller
         $electriciy_response->PaymentResponse()->associate($paymentResponse);
         $electriciy_response->Electriciy()->associate($electricity);
         $bill_info = $response->billInfo;
+        dd($bill_info);
         $electriciy_response->fill($bill_info);
         $electriciy_response->save();
         return $electriciy_response;
