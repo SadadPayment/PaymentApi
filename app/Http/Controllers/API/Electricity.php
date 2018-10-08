@@ -22,20 +22,7 @@ class Electricity extends Controller
     //
     public function electricity(Request $request)
     {
-        $res = array();
-        $info = array();
-        $info += ["meterFees" => "0"];
-        $info += ["netAmount" => "10"];
-        $info += ["unitsInKWh" => "66.7"];
-        $info += ["waterFees" => ""];
-        $info += ["token" => "07246305192693082213"];
-        $info += ["customerName" => "ALSAFIE BAKHIEYT HEMYDAN"];
-        $info += ["opertorMessage" => "Credit Purchase"];
 
-        $res += ["error" => false];
-        $res += ["message" => "Done Successfully"];
-        $res += ["info" => $info];
-        return response()->json($res,200);
         if ($request->isJson()) {
             $token = JWTAuth::parseToken();
             $user = $token->authenticate();

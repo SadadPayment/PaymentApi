@@ -122,7 +122,7 @@ class TopUp extends Controller
                 $transaction->save();
                 $res = array();
                 $res += ["error" => true];
-                $res += ["EBS" , $response];
+                $res += ["message" => "Server Error"];
 
                 return response()->json($res, '200');
             }
@@ -132,7 +132,10 @@ class TopUp extends Controller
                 self::saveTopUp($paymentResponse, $topUp, $response);
                 $transaction->status = "done";
                 $transaction->save();
-                return response()->json($response, '200');
+                $res = array();
+                $res += ["error" => false];
+                $res += ["message" => "Done Successfully"];
+                return response()->json($res, '200');
 
 
             }
