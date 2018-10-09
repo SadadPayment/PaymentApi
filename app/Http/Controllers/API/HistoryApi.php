@@ -28,11 +28,11 @@ class HistoryApi extends Controller
 
 
 
-            $last_res = (array) $res;
-            dd($last_res);
+            //$last_res = (array) $res;
+            //dd($last_res);
 
 
-            $res->type = $transction_type;
+            //$res->type = $transction_type;
             $response[]=$res;
 
 
