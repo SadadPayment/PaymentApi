@@ -15,10 +15,6 @@ class TopUpSeeder extends Seeder
         $zain=App\Model\Payment\TopUp\TopUpBiller::where("name","Zain")->first();
         $sudani=App\Model\Payment\TopUp\TopUpBiller::where("name","Sudani")->first();
         $mtn=App\Model\Payment\TopUp\TopUpBiller::where("name","MTN")->first();
-        //$top_up = App\Model\Payment\TopUp\TopUpType::where("name","TopUp")->first();
-        //$bill_payment = App\Model\TopUpType::where("name","BillPayment")->first();
-
-
 
         $zain_top_up = new App\Model\Payment\payee();
         $zain_top_up->payee_id = "0010010001";
