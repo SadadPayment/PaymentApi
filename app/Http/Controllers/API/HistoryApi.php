@@ -25,7 +25,7 @@ class HistoryApi extends Controller
             $response_one = array();
             $transction_type = TransactionType::where('id', $transaction["transaction_type"])->pluck('name')->first();
             $res = Response::where("transaction_id" , $transaction["id"])->first();
-            $response_one += $res;
+            $response_one += ["Response" => $res];
             $response_one += ["type" => $transction_type];
             $response[]=$response_one;
 
