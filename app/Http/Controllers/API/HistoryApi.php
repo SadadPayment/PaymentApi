@@ -18,20 +18,18 @@ class HistoryApi extends Controller
         $user = $token->authenticate();
 
 
-        $tran = Transaction::where('user_id', '=', $user->id)->get();
+        $tran = Transaction::where('user_id', '=', $user->id)->get()->toArray();
 
 
         foreach ($tran as $transaction ){
 
-            $transction_type = TransactionType::where('id', $transaction->transaction_type)->pluck('name')->first();
-            $res = Response::where("transaction_id" , $transaction->id)->first();
+            $transction_type = TransactionType::where('id', $transaction["transaction_type"])->pluck('name')->first();
+            $res = Response::where("transaction_id" , $transaction["id"])->first();
 
 
 
-            $last_res = (array) $res;
-            //$last_res = $last_res["original"];
-            $last_res += ["type" => $transction_type];
-            dd($last_res);
+            $res += ["type" => $transction_type];
+            dd($res);
 
 
             //$res->type = $transction_type;
