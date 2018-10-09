@@ -27,9 +27,11 @@ class HistoryApi extends Controller
             $res = Response::where("transaction_id" , $transaction["id"])->first();
 
 
+            dd($res);
+
 
             $res += ["type" => $transction_type];
-            dd($res);
+
 
 
             //$res->type = $transction_type;
