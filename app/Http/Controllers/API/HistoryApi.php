@@ -27,7 +27,7 @@ class HistoryApi extends Controller
             $res = Response::where("transaction_id" , $transaction["id"])->first();
 
 
-            $res_last = (array) $res["attributes"];
+            $res_last = (array) $res->attributes;
 
             dd($res_last);
 
