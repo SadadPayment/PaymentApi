@@ -28,12 +28,10 @@ class HistoryApi extends Controller
 
 
 
-            $res_a = (array) $res;
 
-            dd($transction_type);
+            $res->type = $transction_type;
+            $response[]=$res;
 
-            $res_a += ["type" => $transction_type];
-            $response[]=$res_a;
 
         }
         return response()->json(['data'=>$response]);
