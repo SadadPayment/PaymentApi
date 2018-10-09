@@ -33,6 +33,7 @@ class HistoryApi extends Controller
 
 
             //$res->type = $transction_type;
+            $res->transaction_type = $transction_type;
             $response[]=$res;
 
 
