@@ -22,9 +22,9 @@ class HistoryApi extends Controller
 
 
         foreach ($tran as $transaction ){
-            //dd($tran);
-            $transction_type = TransactionType::where('id', $tran->transactionType())->pluck('name')->first();
-            $res = Response::where("transaction_id" , $tran->id)->first();
+
+            $transction_type = TransactionType::where('id', $transaction->transaction_type)->pluck('name')->first();
+            $res = Response::where("transaction_id" , $transaction->id)->first();
 
             $res += ["type" => $transction_type];
             $response[]=$res;
