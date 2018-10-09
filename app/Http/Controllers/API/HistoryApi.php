@@ -29,7 +29,7 @@ class HistoryApi extends Controller
 
             $res_last = (array) $res;
 
-            dd($res->attributes);
+            dd($res["attributes"]);
 
 
             $res += ["type" => $transction_type];
