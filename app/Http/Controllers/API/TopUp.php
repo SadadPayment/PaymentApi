@@ -57,8 +57,8 @@ class TopUp extends Controller
 
             if ($ipin !== $bank->IPIN){
                 $response = array();
-                $response = ["error" => true];
-                $response = ["message" => "Wrong IPIN Code"];
+                $response += ["error" => true];
+                $response += ["message" => "Wrong IPIN Code"];
                 return response()->json($response,200);
             }
             $account = array();
