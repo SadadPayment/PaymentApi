@@ -18,7 +18,7 @@ class HistoryApi extends Controller
         $user = $token->authenticate();
 
 
-        $tran = Transaction::where('user_id', '=', $user->id)->get()->orderBy('id' , 'DESC');
+        $tran = Transaction::where('user_id', '=', $user->id)->get();
 
 
         foreach ($tran as $transaction ){
