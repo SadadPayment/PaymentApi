@@ -102,7 +102,12 @@ class E15 extends Controller
 
             //$req = E15Model::requestBuild($transaction->id,$ipin,$type);
             $response = E15Model::sendRequest($transaction->id,$ipin,$type);
-
+            if ($response == false) {
+                $res = array();
+                $res += ["error" => true];
+                $res += ["message" => "Some Error Found"];
+                return response()->json($res,200);
+            }
             if ($response->responseCode != 0){
                 $response_json = array();
                 $response_json += ["error" => true];

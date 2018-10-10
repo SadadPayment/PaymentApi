@@ -117,6 +117,12 @@ class TopUp extends Controller
             //$ipin = mb_convert_encoding($ipin , 'UTF-8' , 'UTF-8' );
 
             $response = TopUpModel::sendRequest($transaction->id , $ipin);
+            if ($response == false) {
+                $res = array();
+                $res += ["error" => true];
+                $res += ["message" => "Some Error Found"];
+                return response()->json($res,200);
+            }
             if ($response->responseCode != 0){
                 $transaction->status = "Server Error";
                 $transaction->save();

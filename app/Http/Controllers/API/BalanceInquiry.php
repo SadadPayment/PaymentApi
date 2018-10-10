@@ -86,6 +86,12 @@ class BalanceInquiry extends Controller
             $ipin = Functions::encript($publickKey , $uuid , $ipin);
 
             $response = BalanceInquiryModel::sendRequest($transaction->id , $ipin);
+            if ($response == false) {
+                $res = array();
+                $res += ["error" => true];
+                $res += ["message" => "Some Error Found"];
+                return response()->json($res,200);
+            }
             //$basicResonse = Response::saveBasicResponse($transaction, $response);
             //$balance_inquiry_reponse = self::saveBalanceInquiryResonse($basicResonse,$balance_inquiry,$response);
 
