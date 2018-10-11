@@ -47,7 +47,9 @@ class E15 extends Controller
             //$user = JWTAuth::toUser($token);
             /******   Create Transaction Object  *********/
             $phone = $request->json()->get("phone");
-            $amount = (double) $request->json()->get("amount");
+            $amount =  $request->json()->get("amount");
+            $amount =number_format((float)$amount, 2, '.', '');
+            dd($amount);
             $ipin = $request->json()->get("IPIN");
             $invoice = $request->json()->get("invoiceNo");
 
