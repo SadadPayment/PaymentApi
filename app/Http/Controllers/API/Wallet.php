@@ -34,7 +34,7 @@ class Wallet extends Controller
         }
         $ipin = Functions::encript($publickKey , $uuid , "2018"); 
         $request += ["IPIN" => $ipin];
-        $request += ["authenticationType" => "11"];
+        $request += ["authenticationType" => "00"];
         $request += ["fromAccountType" => "00"];
 
         $response = SendRequest::sendRequest($request , "getBalance");
