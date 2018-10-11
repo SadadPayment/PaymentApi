@@ -19,7 +19,7 @@ class Wallet extends Controller
         $request += ["userName" => ""];
         $request += ["userPassword" => ""];
         $request += ["entityId" => "249911122380"];
-        $request += ["entityType" => "Phone No"];
+        $request += ["entityType" => "Mobile Wallet"];
         $request += ["tranCurrency" => "SDG"];
         $request += ["PAN" => ""];
         $request += ["mbr" => ""];
@@ -34,7 +34,7 @@ class Wallet extends Controller
         }
         $ipin = Functions::encript($publickKey , $uuid , "2018"); 
         $request += ["IPIN" => $ipin];
-        $request += ["authenticationType" => "00"];
+        $request += ["authenticationType" => "10"];
         $request += ["fromAccountType" => "00"];
 
         $response = SendRequest::sendRequest($request , "getBalance");
