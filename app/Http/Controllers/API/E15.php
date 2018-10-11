@@ -162,7 +162,7 @@ class E15 extends Controller
         $e15_response = new E15Response();
         $e15_response->PaymentResponse()->associate($paymentResponse);
         $e15_response->E15()->associate($e15);
-        dd($response);
+        //dd($response);
         $bill_info=$response->billInfo;
         $e15_response->invoice_no = $bill_info->invoiceNo;
         $e15_response->expiry = $bill_info->invoiceExpiryDate;
