@@ -16,6 +16,8 @@ class Wallet extends Controller
         $request += ["applicationId" => "Sadad"];
         $uuid = Uuid::generate()->string;
         $request += ["UUID" => $uuid];
+        $request += ["tranDateTime" => Functions::getDateTime()];
+
         $request += ["userName" => ""];
         $request += ["userPassword" => ""];
         $request += ["entityId" => "249911122380"];
