@@ -108,6 +108,7 @@ class E15 extends Controller
                 $res += ["message" => "Some Error Found"];
                 return response()->json($res,200);
             }
+            dd($response);
             if ($response->responseCode != 0){
                 $response_json = array();
                 $response_json += ["error" => true];
