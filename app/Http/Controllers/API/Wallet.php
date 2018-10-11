@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Functions;
 use App\Model\PublicKey;
 use App\Model\SendRequest;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Webpatser\Uuid\Uuid;
 
@@ -35,7 +34,7 @@ class Wallet extends Controller
         }
         $ipin = Functions::encript($publickKey , $uuid , "2018"); 
         $request += ["IPIN" => $ipin];
-        $request += ["authenticationType" => "10"];
+        $request += ["authenticationType" => "11"];
         $request += ["fromAccountType" => "00"];
 
         $response = SendRequest::sendRequest($request , "getBalance");
