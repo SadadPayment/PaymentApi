@@ -48,7 +48,6 @@ class E15 extends Controller
             /******   Create Transaction Object  *********/
             $phone = $request->json()->get("phone");
             $amount = (double) $request->json()->get("amount");
-            dd($amount);
             $ipin = $request->json()->get("IPIN");
             $invoice = $request->json()->get("invoiceNo");
 
