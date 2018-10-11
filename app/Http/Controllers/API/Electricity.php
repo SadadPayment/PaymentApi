@@ -45,6 +45,7 @@ class Electricity extends Controller
             $transaction->user()->associate($user);
             $meter = $request->json()->get("meter");
             $amount = $request->json()->get("amount");
+            $amount =number_format((float)$amount, 2, '.', '');
             $ipin = $request->json()->get("IPIN");
             $bank = Functions::getBankAccountByUser($user);
             $account = array();
