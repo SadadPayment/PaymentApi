@@ -31,10 +31,10 @@ Route::post('topUp', 'API\TopUp@topUp')->middleware('jwt.auth');
 Route::post('balance_inquiry', 'API\BalanceInquiry@balance_inquiry')->middleware('jwt.auth');
 Route::post('cardTransfer', 'API\CardTransfer@card_transfer')->middleware('jwt.auth');
 Route::post('electricity', 'API\Electricity@electricity')->middleware('jwt.auth');
-Route::post('e15_payment', 'API\E15@e15_payment');
-Route::post('e15_inquery', 'API\E15@e15_inquery');
+Route::post('e15_payment', 'API\E15@e15_payment')->middleware('jwt.auth');
+Route::post('e15_inquery', 'API\E15@e15_inquery')->middleware('jwt.auth');
 
 
-Route::get('getByUsers', 'API\ElectHistoryApiController@getByUsers');
-Route::get('getAllTransaction', 'API\HistoryApi@getAllTransactionsByUser');
-Route::get('wallet', 'API\Wallet@balance_inquiry');
+Route::get('getByUsers', 'API\ElectHistoryApiController@getByUsers')->middleware('jwt.auth');
+Route::get('getAllTransaction', 'API\HistoryApi@getAllTransactionsByUser')->middleware('jwt.auth');
+//Route::get('wallet', 'API\Wallet@balance_inquiry')->middleware('jwt.auth');
