@@ -52,6 +52,7 @@ class TopUp extends Controller
             $phone = $request->json()->get("phone");
             $biller = $request->json()->get("biller");
             $amount = $request->json()->get("amount");
+            $amount =number_format((float)$amount, 2, '.', '');
             $ipin = $request->json()->get("IPIN");
             $bank = Functions::getBankAccountByUser($user);
 

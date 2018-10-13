@@ -39,6 +39,7 @@ class CardTransfer extends Controller
             }
             $to = $request->json()->get("to");
             $amount = $request->json()->get("amount");
+            $amount =number_format((float)$amount, 2, '.', '');
             $ipin =  $request->json()->get("IPIN");
             $bank = Functions::getBankAccountByUser($user);
             $account = array();

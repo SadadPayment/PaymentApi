@@ -47,7 +47,9 @@ class E15 extends Controller
             //$user = JWTAuth::toUser($token);
             /******   Create Transaction Object  *********/
             $phone = $request->json()->get("phone");
-            $amount = $request->json()->get("amount");
+            $amount =  $request->json()->get("amount");
+            $amount =number_format((float)$amount, 2, '.', '');
+
             $ipin = $request->json()->get("IPIN");
             $invoice = $request->json()->get("invoiceNo");
 
@@ -162,7 +164,6 @@ class E15 extends Controller
         $e15_response = new E15Response();
         $e15_response->PaymentResponse()->associate($paymentResponse);
         $e15_response->E15()->associate($e15);
-        dd($response);
         $bill_info=$response->billInfo;
         $e15_response->invoice_no = $bill_info->invoiceNo;
         $e15_response->expiry = $bill_info->invoiceExpiryDate;
