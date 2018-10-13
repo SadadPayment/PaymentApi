@@ -27,7 +27,6 @@ class CreateE15ResponsesTable extends Migration
 //            $table->string('expiry');
 //            $table->string('status');
             //$table->string('invoice_no');
-
             $table->timestamps();
         });
     }
