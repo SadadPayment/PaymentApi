@@ -18,20 +18,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post("register" , "API\AuthController@registration")->middleware('cors');
-Route::post("activate" , "API\AuthController@activate");
-Route::post("login" , "API\AuthController@authenticate");
-Route::post("requestreset" , "API\AuthController@resetPassword");
-Route::post("resetpassword" , "API\AuthController@resetPasswordWithCode");
+Route::post("register", "API\AuthController@registration")->middleware('cors');
+Route::post("activate", "API\AuthController@activate");
+Route::post("login", "API\AuthController@authenticate");
+Route::post("requestreset", "API\AuthController@resetPassword");
+Route::post("resetpassword", "API\AuthController@resetPasswordWithCode");
+Route::get('changeIPin', 'API\AuthController@changeIPin');
+
 //Route::post('payment' , 'ApiController@payment')->middleware('jwt.auth');
 //Route::post('payment_account' , 'ApiController@payment_account')->middleware('jwt.auth');
-Route::post('topUp' , 'API\TopUp@topUp')->middleware('jwt.auth');
-Route::post('balance_inquiry' , 'API\BalanceInquiry@balance_inquiry')->middleware('jwt.auth');
-Route::post('cardTransfer' , 'API\CardTransfer@card_transfer')->middleware('jwt.auth');
-Route::post('electricity' , 'API\Electricity@electricity')->middleware('jwt.auth');
-Route::post('e15_payment','API\E15@e15_payment');
-Route::post('e15_inquery','API\E15@e15_inquery');
+Route::post('topUp', 'API\TopUp@topUp')->middleware('jwt.auth');
+Route::post('balance_inquiry', 'API\BalanceInquiry@balance_inquiry')->middleware('jwt.auth');
+Route::post('cardTransfer', 'API\CardTransfer@card_transfer')->middleware('jwt.auth');
+Route::post('electricity', 'API\Electricity@electricity')->middleware('jwt.auth');
+Route::post('e15_payment', 'API\E15@e15_payment')->middleware('jwt.auth');
+Route::post('e15_inquery', 'API\E15@e15_inquery')->middleware('jwt.auth');
 
 
-Route::get('getByUsers', 'API\ElectHistoryApiController@getByUsers');
-Route::get('getAllTransaction', 'API\HistoryApi@getAllTransactionsByUser');
+Route::get('getByUsers', 'API\ElectHistoryApiController@getByUsers')->middleware('jwt.auth');
+Route::get('getAllTransaction', 'API\HistoryApi@getAllTransactionsByUser')->middleware('jwt.auth');
+//Route::get('wallet', 'API\Wallet@balance_inquiry')->middleware('jwt.auth');
