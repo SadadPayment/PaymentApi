@@ -276,4 +276,8 @@ class AuthController extends Controller
         curl_close($curl);
     }
 
+
+    public function changeIPin(){
+        return response()->json('test Pass');
+    }
 }
