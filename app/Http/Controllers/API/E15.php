@@ -158,7 +158,7 @@ class E15 extends Controller
         return $this->e15($request,6);
     }
     public function e15_inquery(Request $request){
-        return response()->json( $this->e15($request,2));
+        return $this->e15($request,2);
     }
     public static function saveE15Response( $paymentResponse ,  $e15 , $response){
 
