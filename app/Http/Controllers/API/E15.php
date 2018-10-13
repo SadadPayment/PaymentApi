@@ -166,10 +166,15 @@ class E15 extends Controller
         $e15_response->PaymentResponse()->associate($paymentResponse);
         $e15_response->E15()->associate($e15);
         $bill_info=$response->billInfo;
-        dd($bill_info);
-        $e15_response->invoice_no = $bill_info->invoiceNo;
-        $e15_response->expiry = $bill_info->invoiceExpiryDate;
-        $e15_response->status = $bill_info->invoiceStatus;
+//        dd($bill_info);
+//        $e15_response->invoice_no = $bill_info->invoiceNo;
+        $e15_response->invoice_no = $bill_info->UnitName;
+        $e15_response->invoice_no = $bill_info->ServiceName;
+        $e15_response->invoice_no = $bill_info->TotalAmount;
+        $e15_response->invoice_no = $bill_info->ReferenceId;
+        $e15_response->invoice_no = $bill_info->PayerName;
+//        $e15_response->expiry = $bill_info->invoiceExpiryDate;
+//        $e15_response->status = $bill_info->invoiceStatus;
         $e15_response->save();
     }
 }
